@@ -1,0 +1,24 @@
+{
+  "name": "devrant-bot",
+  "version": "1.0.0",
+  "description": "An NPM package to create DevRant Bots",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"working\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theabbie/devrant-bot.git"
+  },
+  "keywords": [
+    "devrant",
+    "theabbie",
+    "bot"
+  ],
+  "author": "TheAbbie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theabbie/devrant-bot/issues"
+  },
+  "homepage": "https://github.com/theabbie/devrant-bot#readme"
+}
