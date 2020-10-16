@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/theabbie/devrant-bot/issues"
   },
-  "homepage": "https://github.com/theabbie/devrant-bot#readme"
+  "homepage": "https://github.com/theabbie/devrant-bot#readme",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "rantscript": "^1.4.0"
+  }
 }
