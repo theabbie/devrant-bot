@@ -6,3 +6,5 @@ deploy:
   provider: npm
   email: "${EMAIL}"
   api_key: "${NPM}"
+  on:
+    branch: main
