@@ -9,9 +9,15 @@ module.exports = class Bot {
       this.username = username;
       this.token = token["access_token"];
       return Promise.resolve(this.token);
-    });
+    }).catch(e => {
+      return Promise.reject(e);
+    });;
   }
   
+  test() {
+    console.log("working");
+  }
+
   get() {
     axios("https://gist.githubusercontent.com/C0D4-101/f1a50ad4ecf0730550acf8d5d383f63f/raw/d595bd1a2a310d1f821384db77cff0e02e2c85f4/devrant-bot-list.csv").then(list => {
       var bots = list.data.split(",");
