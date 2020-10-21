@@ -1,43 +1,69 @@
 var rs = require("rantscript");
 var axios = require("axios");
+var fs = require("fs");
 
 module.exports = class Bot {
   constructor() {}
-
-  login(username,password) {
-    rs.login(username,password).then(token => {
+  
+  async login(username,password) {
+    try {
       this.username = username;
-      this.token = token["access_token"];
-      return Promise.resolve(this.token);
-    }).catch(e => {
-      return Promise.reject(e);
-    });;
+      var token = await rs.login(username,password);
+      this.token = token["auth_token"];
+      return this.token;
+    }
+    catch (e) {
+      console.log(e.message);
+    }
   }
   
-  test() {
-    console.log("working");
+  async get() {
+    try {
+       var bots = (await axios("https://raw.githubusercontent.com/C0D4-101/devrant-bots/master/bots.json")).data.map(b=>b.name);
+       var notifs = (await rs.notifications(this.token)).data.items;
+       var ums = [];
+       for (var notif of notifs) {
+         if (notif.type=="comment_mention" && notif.read==0) {
+           var comments = (await rs.rant(notif["rant_id"])).comments; 
+           for (var comment of comments) {
+             if (comment.id==notif["comment_id"] && bots.indexOf(comment["user_username"])==-1) {
+               ums.push({
+                 rid: notif["rant_id"],
+                 cid: notif["comment_id"],
+                 text: comment.body.split("@"+this.username).reverse()[0],
+                 user: comment["user_username"]
+               });
+             }
+           }
+         }
+       }
+       await rs.clearNotifications(this.token);
+       return ums;
+    }
+    catch (e) {
+      console.log(e.message);
+    }
   }
-
-  get() {
-    axios("https://gist.githubusercontent.com/C0D4-101/f1a50ad4ecf0730550acf8d5d383f63f/raw/d595bd1a2a310d1f821384db77cff0e02e2c85f4/devrant-bot-list.csv").then(list => {
-      var bots = list.data.split(",");
-      rs.notifications(this.token).then(notifs => {
-        var ums = [];
-        for (var notif of notifs.data.items) {
-          if (notif.type=="comment_mention" && notif.read==0) {
-	    devRant.rant(notif["rant_id"],this.token).then(rant => {
-              var cts = rant.comments;
-	      for (var ct of cts) {
-                ums.push({
-                  id: notif["rant_id"],
-		  text: ct.body.split("@"+this.username).reverse()[0],
-	          user: ct["user_username"]
-		});
-	      }
-	    });
-          }
-        }
-      });
-    });
+  
+  async reply(username,rid,text,img) {
+    if (img) {
+      await this.load(img);
+      await rs.postComment("@"+username+" "+text,rid,this.token,"img.jpg");
+    }
+    else await rs.postComment("@"+username+" "+text,rid,this.token);
   }
-}
+  
+  async load(url) {  
+    const writer = fs.createWriteStream("img.jpg");
+    const response = await axios({
+      url,
+      method: 'GET',
+      responseType: 'stream'
+    })
+    response.data.pipe(writer)
+    return new Promise((resolve, reject) => {
+      writer.on('finish', resolve)
+      writer.on('error', reject)
+    })
+  }
+}7
