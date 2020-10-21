@@ -21,7 +21,7 @@ console.log(mentions);
 ```
 Which Produces,
 
-```json
+```js
 [
   {
     "rid": 2821893, //rant ID
