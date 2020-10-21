@@ -66,4 +66,4 @@ module.exports = class Bot {
       writer.on('error', reject)
     })
   }
-}7
+}
