@@ -27,7 +27,14 @@ Which Produces,
     "rid": 2821893, //rant ID
     "cid": 3308364,  //comment ID
     "text": "some message", //Message
-    "user": "theabbie"  //Username of user who called
+    "user": "theabbie",  //Username of user who called
+    "time": 1603281044  //Timestamp of comment
+    "rto": [{
+       "id": 3307103,
+       "text": "text",
+       "time": 1603264598,
+     },
+     ...]
   },
   ...
 ]
