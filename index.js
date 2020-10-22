@@ -24,14 +24,17 @@ module.exports = class Bot {
        var ums = [];
        for (var notif of notifs) {
          if (notif.type=="comment_mention" && notif.read==0) {
-           var comments = (await rs.rant(notif["rant_id"])).comments; 
-           for (var comment of comments) {
-             if (comment.id==notif["comment_id"] && bots.indexOf(comment["user_username"])==-1) {
+           var comments = (await rs.rant(notif["rant_id"])).comments;
+           for (var i in comments) {
+             if (comments[i].id==notif["comment_id"] && bots.indexOf(comments[i]["user_username"])==-1) {
+               var rto = comments.slice(0,i).filter(c => c["user_username"]==this.username).map(c=>{return {text: c.body, id: c.id, time: c["created_time"]}});
                ums.push({
                  rid: notif["rant_id"],
                  cid: notif["comment_id"],
-                 text: comment.body.split("@"+this.username).reverse()[0],
-                 user: comment["user_username"]
+                 text: comments[i].body.split("@"+this.username).reverse()[0],
+                 user: comments[i]["user_username"],
+                 rto: rto,
+                 time: comments[i]["created_time"]
                });
              }
            }
