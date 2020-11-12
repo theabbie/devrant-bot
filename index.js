@@ -22,15 +22,18 @@ module.exports = class Bot {
        var bots = (await axios("https://raw.githubusercontent.com/C0D4-101/devrant-bots/master/bots.json")).data.map(b=>b.name);
        var notifs = (await rs.notifications(this.token)).data.items;
        var ums = [];
+       let is_boolean = true;
        for (var notif of notifs) {
          if (notif.type=="comment_mention" && notif.read==0) {
            var comments = (await rs.rant(notif["rant_id"])).comments;
            for (var i in comments) {
-             if (comments[i].id==notif["comment_id"] && bots.indexOf(comments[i]["user_username"])==-1) {
+             if (comments[i].id==notif["comment_id"]) {
+               if(bots.indexOf(comments[i]["user_username"])==-1) is_boolean = false;
                var rto = comments.slice(0,i).filter(c => c["user_username"]==this.username).map(c=>{return {text: c.body, id: c.id, time: c["created_time"]}});
                ums.push({
                  rid: notif["rant_id"],
                  cid: notif["comment_id"],
+                 is_bot: is_boolean,
                  text: comments[i].body.split("@"+this.username).reverse()[0],
                  user: comments[i]["user_username"],
                  rto: rto,
