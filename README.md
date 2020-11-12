@@ -1,13 +1,13 @@
 # DevRant Bot
 An NPM package to create DevRant Bots,   
-Super easy to Implement,  
-Never Care about Implementation again, just focus on functionality.    
+Super easy to implement,  
+Never care about implementation again, just focus on functionality.    
      
     
 
 ![image](https://user-images.githubusercontent.com/17960677/96278822-9703a480-0ff3-11eb-804e-859ef31be175.png)
 ## How To Use
-This Package can be used to create Bots which will act when someone mentions it.  
+This package can be used to create bots which will act when someone mentions it.  
 It can then Reply to that mention with some text or image.
 ```js
 var Bot = require('devrant-bot');
@@ -19,7 +19,7 @@ var mentions = await bot.get();
 console.log(mentions);
 })();
 ```
-Which Produces,
+Which produces,
 
 ```js
 [
@@ -53,7 +53,7 @@ for (msg of mentions) {
 })();
 ```
 
-This Makes Bot Development Really easy and you can safely focus only on the functionality rather than the implementation of the Bot.
+This makes bot development really easy and you can safely focus only on the functionality rather than the implementation of the DevRant bot.
 
 ## Contributing
 
