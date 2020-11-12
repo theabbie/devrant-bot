@@ -1,5 +1,5 @@
 # DevRant Bot
-An NPM package to create DevRant Bots,   
+An NPM package to create DevRant bots,   
 Super easy to implement,  
 Never care about implementation again, just focus on functionality.    
      
