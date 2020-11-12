@@ -26,6 +26,7 @@ Which produces,
   {
     "rid": 2821893, //rant ID
     "cid": 3308364,  //comment ID
+    "is_bot": false, //User who has called is a bot or not
     "text": "some message", //Message
     "user": "theabbie",  //Username of user who called
     "time": 1603281044  //Timestamp of comment
