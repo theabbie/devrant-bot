@@ -49,7 +49,7 @@ var bot = new Bot();
 await bot.login("username","password");
 var mentions = await bot.get();
 for (msg of mentions) {
-  await bot.reply(msg.user,msg.rid,"reply"[,image_url]);
+  await bot.reply(msg.user,msg.rid,"reply", image_url);
 }
 })();
 ```
